@@ -31,11 +31,7 @@ export class Ticket extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 
-  // @ManyToOne(() => User, (user) => user.createdTickets, {
-  //   nullable: false,
-  // })
-  // @JoinColumn({ name: 'created_by' }) 
-  // createdByUser: User;
+
 
   @Column({ name: 'assigned_to', type: 'uuid', nullable: true })
   assignedTo: string | null;

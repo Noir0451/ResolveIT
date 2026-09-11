@@ -46,21 +46,6 @@ export class User extends BaseEntity {
 })
   type: UserType;
 
-  // @ManyToOne(() => User, (user) => user.createdUsers, { nullable: true })
-  // @JoinColumn({ name: 'created_by' })
-  // creator: User | null;
-
-  // @ManyToOne(() => User, (user) => user.updatedUsers, { nullable: true })
-  // @JoinColumn({ name: 'updated_by' })
-  // updater: User | null;
-
-  // @ManyToOne(() => User, (user) => user.deletedUsers, { nullable: true })
-  // @JoinColumn({ name: 'deleted_by' })
-  // deleter: User | null;
-
-  // @OneToMany(() => Ticket, (ticket) => ticket.createdByUser)
-  createdTickets: Ticket[];
-
   @OneToMany(() => Ticket, (ticket) => ticket.assignedToUser)
   assignedTickets: Ticket[];
 
@@ -73,12 +58,4 @@ export class User extends BaseEntity {
   @OneToMany(() => Ticket, (ticket) => ticket.deletedBy)
   deletedTickets: Ticket[];
 
-  // @OneToMany(() => User, (user) => user.creator)
-  // createdUsers: User[];
-
-  // @OneToMany(() => User, (user) => user.updater)
-  // updatedUsers: User[];
-
-  // @OneToMany(() => User, (user) => user.deleter)
-  // deletedUsers: User[];
 }
