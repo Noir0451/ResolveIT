@@ -1,22 +1,18 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
+
 import { Role } from '../roles/role.entity';
 import { Ticket } from '../tickets/entities/ticket.entity';
+import { BaseEntity } from '../common/abstract.entity';
 
 @Entity('users')
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class User extends BaseEntity {
   @Column({ type: 'varchar' })
   name: string;
 
@@ -31,38 +27,20 @@ export class User {
   @Column({ type: 'varchar', nullable: true })
   phone: string | null;
 
-  @Column({ name: 'role_id', type: 'int' })
-  roleId: number;
+  @Column({ name: 'role_id', type: 'uuid' })
+  roleId: string;
 
   @ManyToOne(() => Role, (role) => role.users, { nullable: false })
   @JoinColumn({ name: 'role_id' })
   role: Role;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
-  updatedAt: Date;
-
-  @Column({ name: 'created_by', type: 'int', nullable: true })
-  createdBy: number | null;
-
   @ManyToOne(() => User, (user) => user.createdUsers, { nullable: true })
   @JoinColumn({ name: 'created_by' })
   creator: User | null;
 
-  @Column({ name: 'updated_by', type: 'int', nullable: true })
-  updatedBy: number | null;
-
   @ManyToOne(() => User, (user) => user.updatedUsers, { nullable: true })
   @JoinColumn({ name: 'updated_by' })
   updater: User | null;
-
-  @Column({ name: 'deleted_at', type: 'timestamptz', nullable: true })
-  deletedAt: Date | null;
-
-  @Column({ name: 'deleted_by', type: 'int', nullable: true })
-  deletedBy: number | null;
 
   @ManyToOne(() => User, (user) => user.deletedUsers, { nullable: true })
   @JoinColumn({ name: 'deleted_by' })
@@ -77,10 +55,10 @@ export class User {
   @OneToMany(() => Ticket, (ticket) => ticket.assignedByUser)
   assignedByTickets: Ticket[];
 
-  @OneToMany(() => Ticket, (ticket) => ticket.updatedByUser)
+  @OneToMany(() => Ticket, (ticket) => ticket.updatedBy)
   updatedTickets: Ticket[];
 
-  @OneToMany(() => Ticket, (ticket) => ticket.deletedByUser)
+  @OneToMany(() => Ticket, (ticket) => ticket.deletedBy)
   deletedTickets: Ticket[];
 
   @OneToMany(() => User, (user) => user.creator)
