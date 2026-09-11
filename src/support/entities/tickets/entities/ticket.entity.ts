@@ -6,8 +6,8 @@ import {
 } from 'typeorm';
 
 import { Category } from '../../categories/category.entity';
-import { User } from '../../users/user.entity';
-import { BaseEntity } from '../../common/abstract.entity';
+import { User } from '../../../../auth/entities/users/user.entity';
+import { BaseEntity } from '../../../../common/abstract.entity';
 
 export enum TicketStatus {
   OPEN = 'OPEN',
@@ -31,11 +31,11 @@ export class Ticket extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 
-  @ManyToOne(() => User, (user) => user.createdTickets, {
-    nullable: false,
-  })
-  @JoinColumn({ name: 'created_by' })
-  createdByUser: User;
+  // @ManyToOne(() => User, (user) => user.createdTickets, {
+  //   nullable: false,
+  // })
+  // @JoinColumn({ name: 'created_by' }) 
+  // createdByUser: User;
 
   @Column({ name: 'assigned_to', type: 'uuid', nullable: true })
   assignedTo: string | null;

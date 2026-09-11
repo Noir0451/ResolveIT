@@ -8,8 +8,13 @@ import {
 } from 'typeorm';
 
 import { Role } from '../roles/role.entity';
-import { Ticket } from '../tickets/entities/ticket.entity';
-import { BaseEntity } from '../common/abstract.entity';
+import { Ticket } from '../../../support/entities/tickets/entities/ticket.entity';
+import { BaseEntity } from '../../../common/abstract.entity';
+
+export enum UserType {
+  INTERNAL = 'INTERNAL',
+  EXTERNAL = 'EXTERNAL',
+}
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -34,19 +39,26 @@ export class User extends BaseEntity {
   @JoinColumn({ name: 'role_id' })
   role: Role;
 
-  @ManyToOne(() => User, (user) => user.createdUsers, { nullable: true })
-  @JoinColumn({ name: 'created_by' })
-  creator: User | null;
+  @Column({
+  type: 'enum',
+  enum: UserType,
+  default: UserType.INTERNAL,
+})
+  type: UserType;
 
-  @ManyToOne(() => User, (user) => user.updatedUsers, { nullable: true })
-  @JoinColumn({ name: 'updated_by' })
-  updater: User | null;
+  // @ManyToOne(() => User, (user) => user.createdUsers, { nullable: true })
+  // @JoinColumn({ name: 'created_by' })
+  // creator: User | null;
 
-  @ManyToOne(() => User, (user) => user.deletedUsers, { nullable: true })
-  @JoinColumn({ name: 'deleted_by' })
-  deleter: User | null;
+  // @ManyToOne(() => User, (user) => user.updatedUsers, { nullable: true })
+  // @JoinColumn({ name: 'updated_by' })
+  // updater: User | null;
 
-  @OneToMany(() => Ticket, (ticket) => ticket.createdByUser)
+  // @ManyToOne(() => User, (user) => user.deletedUsers, { nullable: true })
+  // @JoinColumn({ name: 'deleted_by' })
+  // deleter: User | null;
+
+  // @OneToMany(() => Ticket, (ticket) => ticket.createdByUser)
   createdTickets: Ticket[];
 
   @OneToMany(() => Ticket, (ticket) => ticket.assignedToUser)
@@ -61,12 +73,12 @@ export class User extends BaseEntity {
   @OneToMany(() => Ticket, (ticket) => ticket.deletedBy)
   deletedTickets: Ticket[];
 
-  @OneToMany(() => User, (user) => user.creator)
-  createdUsers: User[];
+  // @OneToMany(() => User, (user) => user.creator)
+  // createdUsers: User[];
 
-  @OneToMany(() => User, (user) => user.updater)
-  updatedUsers: User[];
+  // @OneToMany(() => User, (user) => user.updater)
+  // updatedUsers: User[];
 
-  @OneToMany(() => User, (user) => user.deleter)
-  deletedUsers: User[];
+  // @OneToMany(() => User, (user) => user.deleter)
+  // deletedUsers: User[];
 }
