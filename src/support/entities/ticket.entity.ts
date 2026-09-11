@@ -5,9 +5,9 @@ import {
   ManyToOne,
 } from 'typeorm';
 
-import { Category } from '../../categories/category.entity';
-import { User } from '../../../../auth/entities/users/user.entity';
-import { BaseEntity } from '../../../../common/abstract.entity';
+import { Category } from './category.entity';
+import { User } from '../../auth/entities/user.entity';
+import { BaseEntity } from '../../common/abstract.entity';
 
 export enum TicketStatus {
   OPEN = 'OPEN',

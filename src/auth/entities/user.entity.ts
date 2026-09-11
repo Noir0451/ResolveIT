@@ -7,9 +7,9 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { Role } from '../roles/role.entity';
-import { Ticket } from '../../../support/entities/tickets/entities/ticket.entity';
-import { BaseEntity } from '../../../common/abstract.entity';
+import { Role } from './role.entity';
+import { Ticket } from '../../support/entities/ticket.entity';
+import { BaseEntity } from '../../common/abstract.entity';
 
 export enum UserType {
   INTERNAL = 'INTERNAL',

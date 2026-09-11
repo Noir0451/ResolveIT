@@ -3,7 +3,10 @@ import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { DatabaseModule } from './database/database.module.js';
-import { UsersModule } from './auth/entities/users/users.module.js';
+import { SupportModule } from './support/support.module';
+import { AuthModule } from './auth/auth.module';
+
+
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -17,7 +20,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'ticket_system',
     }),
     DatabaseModule,
-    UsersModule,
+    SupportModule,
+    AuthModule,
   ], 
   controllers: [AppController],
   providers: [AppService],

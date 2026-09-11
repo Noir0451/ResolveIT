@@ -1,14 +1,15 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class InitialSchema1789119250972 implements MigrationInterface {
-    name = 'InitialSchema1789119250972'
+export class InitialSchema1789125260142 implements MigrationInterface {
+    name = 'InitialSchema1789125260142'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "categories" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_by" uuid NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_by" uuid, "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_by" uuid, "deleted_at" TIMESTAMP, "name" character varying NOT NULL, "description" text, "parent_id" uuid, CONSTRAINT "UQ_8b0be371d28245da6e4f4b61878" UNIQUE ("name"), CONSTRAINT "PK_24dbc6126a28ff948da33e97d3b" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TYPE "public"."tickets_status_enum" AS ENUM('OPEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED')`);
         await queryRunner.query(`CREATE TYPE "public"."tickets_priority_enum" AS ENUM('LOW', 'MEDIUM', 'HIGH', 'URGENT')`);
         await queryRunner.query(`CREATE TABLE "tickets" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_by" uuid NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_by" uuid, "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_by" uuid, "deleted_at" TIMESTAMP, "title" character varying NOT NULL, "description" text NOT NULL, "assigned_to" uuid, "assigned_by" uuid, "category_id" uuid NOT NULL, "status" "public"."tickets_status_enum" NOT NULL DEFAULT 'OPEN', "priority" "public"."tickets_priority_enum" NOT NULL DEFAULT 'MEDIUM', CONSTRAINT "PK_343bc942ae261cf7a1377f48fd0" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_by" uuid NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_by" uuid, "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_by" uuid, "deleted_at" TIMESTAMP, "name" character varying NOT NULL, "email" character varying NOT NULL, "password_hash" character varying NOT NULL, "phone" character varying, "role_id" uuid NOT NULL, CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TYPE "public"."users_type_enum" AS ENUM('INTERNAL', 'EXTERNAL')`);
+        await queryRunner.query(`CREATE TABLE "users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_by" uuid NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_by" uuid, "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_by" uuid, "deleted_at" TIMESTAMP, "name" character varying NOT NULL, "email" character varying NOT NULL, "password_hash" character varying NOT NULL, "phone" character varying, "role_id" uuid NOT NULL, "type" "public"."users_type_enum" NOT NULL DEFAULT 'INTERNAL', CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE UNIQUE INDEX "UQ_USERS_EMAIL" ON "users" ("email") `);
         await queryRunner.query(`CREATE UNIQUE INDEX "UQ_USERS_PHONE" ON "users" ("phone") `);
         await queryRunner.query(`CREATE TABLE "roles" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_by" uuid NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_by" uuid, "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_by" uuid, "deleted_at" TIMESTAMP, "name" character varying NOT NULL, "description" text, CONSTRAINT "UQ_648e3f5447f725579d7d4ffdfb7" UNIQUE ("name"), CONSTRAINT "PK_c1433d71a4838793a49dcad46ab" PRIMARY KEY ("id"))`);
@@ -29,6 +30,7 @@ export class InitialSchema1789119250972 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."UQ_USERS_PHONE"`);
         await queryRunner.query(`DROP INDEX "public"."UQ_USERS_EMAIL"`);
         await queryRunner.query(`DROP TABLE "users"`);
+        await queryRunner.query(`DROP TYPE "public"."users_type_enum"`);
         await queryRunner.query(`DROP TABLE "tickets"`);
         await queryRunner.query(`DROP TYPE "public"."tickets_priority_enum"`);
         await queryRunner.query(`DROP TYPE "public"."tickets_status_enum"`);

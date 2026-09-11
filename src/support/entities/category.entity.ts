@@ -6,8 +6,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import { Ticket } from '../tickets/entities/ticket.entity';
-import { BaseEntity } from '../../../common/abstract.entity';
+import { Ticket } from '../../support/entities/ticket.entity';
+import { BaseEntity } from '../../common/abstract.entity';
 
 @Entity('categories')
 export class Category extends BaseEntity {

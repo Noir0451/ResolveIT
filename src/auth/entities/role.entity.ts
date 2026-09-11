@@ -4,8 +4,8 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { User } from '../users/user.entity';
-import { BaseEntity } from '../../../common/abstract.entity';
+import { User } from './user.entity';
+import { BaseEntity } from '../../common/abstract.entity';
 
 @Entity('roles')
 export class Role extends BaseEntity {
