@@ -4,7 +4,6 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { DatabaseModule } from './database/database.module.js';
 import { UsersModule } from './auth/entities/users/users.module.js';
-import { TicketsModule } from './tickets/tickets.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -19,7 +18,6 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     }),
     DatabaseModule,
     UsersModule,
-    TicketsModule,
   ], 
   controllers: [AppController],
   providers: [AppService],
