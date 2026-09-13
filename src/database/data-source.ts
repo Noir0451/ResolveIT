@@ -1,10 +1,10 @@
 import * as path from 'node:path';
 import * as dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
-import { Role } from '../roles/role.entity';
-import { User } from '../users/user.entity';
-import { Category } from '../categories/category.entity';
-import { Ticket } from '../tickets/entities/ticket.entity';
+import { Role } from '../auth/entities/role.entity';
+import { User } from '../auth/entities/user.entity';
+import { Category } from '../support/entities/category.entity';
+import { Ticket } from '../support/entities/ticket.entity';
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
